@@ -15,7 +15,8 @@ namespace Textures
     {
         ALL,
         Buttons,
-        SFMLlogo
+        SFMLlogo,
+        Title
     };
 }
 

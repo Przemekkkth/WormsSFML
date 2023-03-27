@@ -3,6 +3,8 @@
 #include "const/state_identifiers.h"
 #include "states/state.h"
 #include "states/game_state.h"
+#include "states/title_state.h"
+#include "states/menu_state.h"
 #include "const/constants.h"
 
 const sf::Time Application::TimePerFrame = sf::seconds(1.f/60.f);
@@ -17,13 +19,14 @@ Application::Application()
 {
     mWindow.setKeyRepeatEnabled(false);
 
-//    mFonts.load(Fonts::Main, 	"res/minecraft.ttf");
+    mFonts.load(Fonts::Main, 	            "res/minecraft.ttf");
 
-//    mTextures.load(Textures::Buttons,		"res/buttons.png");
-//    mTextures.load(Textures::SFMLlogo, "res/sfml-logo-small.png");
+    mTextures.load(Textures::Buttons,		"res/buttons.png");
+    mTextures.load(Textures::SFMLlogo,      "res/sfml-logo-small.png");
+    mTextures.load(Textures::Title,         "res/title.png");
 
     registerStates();
-    mStateStack.pushState(States::Game);
+    mStateStack.pushState(States::Title);
 }
 
 void Application::run()
@@ -81,5 +84,7 @@ void Application::render()
 
 void Application::registerStates()
 {
+    mStateStack.registerState<TitleState>(States::Title);
+    mStateStack.registerState<MenuState>(States::Menu);
     mStateStack.registerState<GameState>(States::Game);
 }
