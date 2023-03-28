@@ -23,7 +23,7 @@ MenuState::MenuState(StateStack& stack, Context context)
     sandbox1Button->setText("Sandbox 1");
     sandbox1Button->setCallback([this] ()
     {
-        GameState::choosenLevel = 0;
+        GameState::sMode = GameState::Mode::Sandbox1;
         requestStackPop();
         requestStackPush(States::Game);
     });
@@ -34,6 +34,7 @@ MenuState::MenuState(StateStack& stack, Context context)
     sandbox2Button->setText("Sandbox 2");
     sandbox2Button->setCallback([this] ()
     {
+        GameState::sMode = GameState::Mode::Sandbox2;
         requestStackPop();
         requestStackPush(States::Game);
     });
