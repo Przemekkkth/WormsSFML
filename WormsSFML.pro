@@ -27,7 +27,8 @@ HEADERS += \
     src/states/title_state.h \
     src/utils/resource_holder.h \
     src/utils/resource_identifiers.h \
-    src/world.h
+    src/world.h \
+    src/world1.h
 
 SOURCES += \
     src/GUI/button.cpp \
@@ -49,4 +50,5 @@ SOURCES += \
     src/states/state.cpp \
     src/states/state_stack.cpp \
     src/states/title_state.cpp \
-    src/world.cpp
+    src/world.cpp \
+    src/world1.cpp

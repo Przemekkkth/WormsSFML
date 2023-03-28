@@ -17,15 +17,17 @@ Worm::Worm(const TextureHolder& textures, float x, float y)
 
 void Worm::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-    int scalePixmap = bPixel ? 4 : 8;
     sf::Vector2f p = sf::Vector2f(px-fOffsetX-radius, py-fOffsetY-radius);
     sf::Sprite sprite;
     sprite.setTexture(wormTex);
-    sprite.setTextureRect(sf::IntRect(0,0,62,65));
+    sprite.setTextureRect(sf::IntRect(0,0, TEX_W, TEX_H));
     sprite.setPosition(p.x*UNIT_SIZE, p.y*UNIT_SIZE);
+    //Scale to 32x32pixels
     sprite.setScale(1.0f/(62.0f/32.0f), 1.0f/(65.0f/32.0f));
-    float factorScale = radius*UNIT_SIZE/2.0f;
-    float pixelScale = 0.5f*UNIT_SIZE/2.0f;
+    if(fShootAngle >= -PI_2 && fShootAngle <= PI_2)
+    {
+        sprite.setTextureRect(sf::IntRect(TEX_W,0,-TEX_W,TEX_H));
+    }
     target.draw(sprite);
 }
 

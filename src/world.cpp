@@ -25,9 +25,12 @@ World::World(sf::RenderWindow& outputTarget, FontHolder& fonts, SoundPlayer& sou
     , mSounds(sounds)
 
 {
-    loadTextures();
-    srand(time(0));
-    onUserCreate();
+
+}
+
+World::~World()
+{
+    delete [] map;
 }
 
 void World::update(sf::Time dt)
@@ -119,6 +122,8 @@ void World::prepareBG()
 
 bool World::onUserCreate()
 {
+    loadTextures();
+    srand(time(0));
     // Create Map
     map = new unsigned char[nMapWidth * nMapHeight];
     memset(map, 0, nMapWidth*nMapHeight * sizeof(unsigned char));

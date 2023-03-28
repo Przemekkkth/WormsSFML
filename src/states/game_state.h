@@ -3,6 +3,7 @@
 
 #include "state.h"
 #include "../world.h"
+#include "../world1.h"
 #include "../player.h"
 
 #include <SFML/Graphics/Sprite.hpp>
@@ -20,8 +21,12 @@ class GameState : public State
 
         static int choosenLevel;
         static sf::String score;
+
+        enum class Mode { Sandbox1, Sandbox2, PvPC };
+        static Mode sMode;
     private:
         World				mWorld;
+        World1              mWorld1;
         Player&				mPlayer;
 
 };
