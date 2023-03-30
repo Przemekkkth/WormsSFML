@@ -18,6 +18,7 @@ HEADERS += \
     src/entity/dummy.h \
     src/entity/missile.h \
     src/entity/physics_object.h \
+    src/entity/team.h \
     src/entity/worm.h \
     src/player.h \
     src/states/game_state.h \
@@ -28,7 +29,8 @@ HEADERS += \
     src/utils/resource_holder.h \
     src/utils/resource_identifiers.h \
     src/world.h \
-    src/world1.h
+    src/world1.h \
+    src/world2.h
 
 SOURCES += \
     src/GUI/button.cpp \
@@ -42,6 +44,7 @@ SOURCES += \
     src/entity/dummy.cpp \
     src/entity/missile.cpp \
     src/entity/physics_object.cpp \
+    src/entity/team.cpp \
     src/entity/worm.cpp \
     src/main.cpp \
     src/player.cpp \
@@ -51,4 +54,5 @@ SOURCES += \
     src/states/state_stack.cpp \
     src/states/title_state.cpp \
     src/world.cpp \
-    src/world1.cpp
+    src/world1.cpp \
+    src/world2.cpp

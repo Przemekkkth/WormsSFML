@@ -13,9 +13,13 @@ public:
     virtual bool Damage(float d) override;
     sf::Texture wormTex;
     float fShootAngle = 0.0f;
+    float fHealth = 1.0f;
+    int nTeam = 0;	// ID of which team this worm belongs to
+    bool bIsPlayable = true;
 private:
     const int TEX_W = 62.0f;
     const int TEX_H = 65.0f;
+
 };
 
 #endif // WORM_H

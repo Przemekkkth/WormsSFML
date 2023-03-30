@@ -4,6 +4,7 @@
 #include "state.h"
 #include "../world.h"
 #include "../world1.h"
+#include "../world2.h"
 #include "../player.h"
 
 #include <SFML/Graphics/Sprite.hpp>
@@ -27,6 +28,7 @@ class GameState : public State
     private:
         World				mWorld;
         World1              mWorld1;
+        World2              mWorld2;
         Player&				mPlayer;
 
 };

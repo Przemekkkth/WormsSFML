@@ -11,6 +11,7 @@ GameState::GameState(StateStack& stack, Context context)
 : State(stack, context)
 , mWorld(*context.window, *context.fonts, *context.sounds),
   mWorld1(*context.window, *context.fonts, *context.sounds),
+  mWorld2(*context.window, *context.fonts, *context.sounds),
   mPlayer(*context.player)
 {
     if(sMode == GameState::Mode::Sandbox1)
@@ -23,7 +24,7 @@ GameState::GameState(StateStack& stack, Context context)
     }
     else
     {
-
+        mWorld2.onUserCreate();
     }
 }
 
@@ -39,7 +40,7 @@ void GameState::draw()
     }
     else
     {
-
+        mWorld2.draw();
     }
 }
 
@@ -55,7 +56,7 @@ bool GameState::update(sf::Time dt)
     }
     else
     {
-
+        mWorld2.update(dt);
     }
     return true;
 }
@@ -81,7 +82,7 @@ bool GameState::handleEvent(const sf::Event& event)
     }
     else
     {
-
+        mWorld2.processInput(event);
     }
      return true;
 }

@@ -44,6 +44,7 @@ MenuState::MenuState(StateStack& stack, Context context)
     pVsPCButton->setText("Player VS PC");
     pVsPCButton->setCallback([this] ()
     {
+        GameState::sMode = GameState::Mode::PvPC;
         requestStackPop();
         requestStackPush(States::Game);
     });
