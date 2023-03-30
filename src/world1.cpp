@@ -29,6 +29,12 @@ World1::World1(sf::RenderWindow& outputTarget, FontHolder& fonts, SoundPlayer& s
 
 }
 
+World1::~World1()
+{
+    delete [] map;
+}
+
+
 void World1::update(sf::Time dt)
 {
     setCameraPos(dt);

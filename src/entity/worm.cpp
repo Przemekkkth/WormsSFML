@@ -32,7 +32,14 @@ void Worm::draw(sf::RenderTarget &target, sf::RenderStates states) const
     }
     sprite.setPosition(p.x*UNIT_SIZE, p.y*UNIT_SIZE);
     //Scale to 32x32pixels
-    sprite.setScale(1.0f/(62.0f/32.0f), 1.0f/(65.0f/32.0f));
+    if(!bPixel)
+    {
+        sprite.setScale(1.0f/(62.0f/32.0f), 1.0f/(65.0f/32.0f));
+    }
+    else
+    {
+        sprite.setScale(1.0f/(62.0f/16.0f), 1.0f/(65.0f/16.0f));
+    }
     if(bIsPlayable)
     {
         if(fShootAngle >= -PI_2 && fShootAngle <= PI_2)
@@ -58,4 +65,16 @@ bool Worm::Damage(float d)
         bIsPlayable = false;
     }
     return fHealth > 0;
+}
+
+void Worm::checkRadius()
+{
+    if(!bPixel)
+    {
+        radius = 3.3f;
+    }
+    else
+    {
+        radius = 1.65f;
+    }
 }

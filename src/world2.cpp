@@ -30,6 +30,11 @@ World2::World2(sf::RenderWindow& outputTarget, FontHolder& fonts, SoundPlayer& s
 
 }
 
+World2::~World2()
+{
+    delete [] map;
+}
+
 void World2::update(sf::Time dt)
 {
     setCameraPos(dt);
@@ -54,6 +59,10 @@ void World2::update(sf::Time dt)
         {
             p->px = 1024*UNIT_SIZE - 60;
         }
+    }
+    for(Team team : vecTeams)
+    {
+        team.checkWormRadius();
     }
     // Update State Machine
     nGameState = nNextState;
@@ -104,12 +113,13 @@ void World2::processInput(const sf::Event &event)
         {
             spaceReleased = true;
         }
+        if(event.key.code == sf::Keyboard::Tab)
+        {
+            bZoomOut = !bZoomOut;
+        }
     }
 }
 
-bool World2::isGameOver() const
-{
-}
 
 void World2::loadTextures()
 {
@@ -120,26 +130,66 @@ void World2::prepareBG()
 {
     sf::Image bgImage;
     bgImage.create(LOGIC_W, LOGIC_H);
-    // prepare Landscape
-    for (int x = 0; x < LOGIC_W; x++)
+    if(!bZoomOut)
     {
-        for (int y = 0; y < LOGIC_H; y++)
+        // prepare Landscape
+        for (int x = 0; x < LOGIC_W; x++)
         {
-            // Offset screen coordinates into World2 coordinates
-
-            switch (map[(y + (int)fCameraPosY)*nMapWidth + (x + (int)fCameraPosX)])
+            for (int y = 0; y < LOGIC_H; y++)
             {
-            case 0:
-                bgImage.setPixel(x, y, sf::Color::Cyan);
-                break;
-            case 1:
-                bgImage.setPixel(x, y, sf::Color::Green);
-                break;
-            default:
-                std::cout << "Invalid " << std::endl;
+                // Offset screen coordinates into World2 coordinates
+                switch (map[(y + (int)fCameraPosY)*nMapWidth + (x + (int)fCameraPosX)])
+                {
+                case -1:bgImage.setPixel(x, y, sf::Color(50, 60, 118)); break;
+                case -2:bgImage.setPixel(x, y, sf::Color(62, 78, 137)); break;
+                case -3:bgImage.setPixel(x, y, sf::Color(74, 97, 146)); break;
+                case -4:bgImage.setPixel(x, y, sf::Color(92, 130, 164)); break;
+                case -5:bgImage.setPixel(x, y, sf::Color(117, 164, 191)); break;
+                case -6:bgImage.setPixel(x, y, sf::Color(134, 183, 200)); break;
+                case -7:bgImage.setPixel(x, y, sf::Color(160, 210, 228)); break;
+                case -8:bgImage.setPixel(x, y, sf::Color(197, 240, 255)); break;
+                case 0:
+                    bgImage.setPixel(x, y, sf::Color::Cyan);
+                    break;
+                case 1:
+                    bgImage.setPixel(x, y, sf::Color::Green);
+                    break;
+                default:
+                    std::cout << "Invalid " << std::endl;
+                }
             }
         }
     }
+    else
+    {
+        for (int x = 0; x < LOGIC_SIZE.x; x++)
+            for (int y = 0; y < LOGIC_SIZE.y; y++)
+            {
+                float fx = (float)x/(float)LOGIC_SIZE.x * (float)nMapWidth;
+                float fy = (float)y/(float)LOGIC_SIZE.y * (float)nMapHeight;
+
+                switch (map[((int)fy)*nMapWidth + ((int)fx)])
+                {
+                case -1:bgImage.setPixel(x, y, sf::Color(50, 60, 118)); break;
+                case -2:bgImage.setPixel(x, y, sf::Color(62, 78, 137)); break;
+                case -3:bgImage.setPixel(x, y, sf::Color(74, 97, 146)); break;
+                case -4:bgImage.setPixel(x, y, sf::Color(92, 130, 164)); break;
+                case -5:bgImage.setPixel(x, y, sf::Color(117, 164, 191)); break;
+                case -6:bgImage.setPixel(x, y, sf::Color(134, 183, 200)); break;
+                case -7:bgImage.setPixel(x, y, sf::Color(160, 210, 228)); break;
+                case -8:bgImage.setPixel(x, y, sf::Color(197, 240, 255)); break;
+                case 0:
+                    bgImage.setPixel(x, y, sf::Color::Cyan);
+                    break;
+                case 1:
+                    bgImage.setPixel(x, y, sf::Color::Green);
+                    break;
+                default:
+                    std::cout << "Invalid " << std::endl;
+                }
+            }
+    }
+
     mBgTex.loadFromImage(bgImage);
     mBgSprite.setTexture(mBgTex);
     mBgSprite.setScale(UNIT_SIZE, UNIT_SIZE);
@@ -216,11 +266,11 @@ void World2::createMap()
             }
             else
             {
-//                // Shade the sky according to altitude - we only do top 1/3 of map
-//                // as the Boom() function will just paint in 0 (cyan)
-//                if ((float)y < (float)nMapHeight / 3.0f)
-//                    map[y * nMapWidth + x] = (-8.0f * ((float)y / (nMapHeight / 3.0f))) -1.0f;
-//                else
+                // Shade the sky according to altitude - we only do top 1/3 of map
+                // as the Boom() function will just paint in 0 (cyan)
+                if ((float)y < (float)nMapHeight / 3.0f)
+                    map[y * nMapWidth + x] = (-8.0f * ((float)y / (nMapHeight / 3.0f))) -1.0f;
+                else
                     map[y * nMapWidth + x] = 0;
             }
         }
@@ -294,9 +344,13 @@ void World2::drawObjects()
 {
     for (auto &p : listObjects)
     {
-        p->fOffsetX = fCameraPosX;
-        p->fOffsetY = fCameraPosY;
-        p->bPixel   = false;
+
+        if(!bZoomOut)
+        {
+            p->fOffsetX = fCameraPosX;
+            p->fOffsetY = fCameraPosY;
+            p->bPixel   = false;
+
         p->draw(mTarget, sf::RenderStates());
 
         Worm* worm = (Worm*)pObjectUnderControl;
@@ -350,6 +404,14 @@ void World2::drawObjects()
                                   (worm->py - 11 - fCameraPosY)*UNIT_SIZE);
                 mTarget.draw(red);
             }
+        }
+
+        }
+        else{
+            p->fOffsetX = p->px-(p->px / (float)nMapWidth) * (float)LOGIC_SIZE.x;
+            p->fOffsetY = p->py-(p->py / (float)nMapHeight) * (float)LOGIC_SIZE.y;
+            p->bPixel   = true;
+            p->draw(mTarget, sf::RenderStates());
         }
     }
 }

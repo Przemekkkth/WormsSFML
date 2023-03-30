@@ -16,6 +16,7 @@ public:
     float fHealth = 1.0f;
     int nTeam = 0;	// ID of which team this worm belongs to
     bool bIsPlayable = true;
+    void checkRadius();
 private:
     const int TEX_W = 62.0f;
     const int TEX_H = 65.0f;

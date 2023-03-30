@@ -20,3 +20,11 @@ Worm *Team::GetNextMember()
     } while (vecMembers[nCurrentMember]->fHealth <= 0);
     return vecMembers[nCurrentMember];
 }
+
+void Team::checkWormRadius()
+{
+    for(Worm* worm : vecMembers)
+    {
+        worm->checkRadius();
+    }
+}

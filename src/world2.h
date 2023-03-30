@@ -26,11 +26,11 @@ class World2 : private sf::NonCopyable
 {
     public:
                                             World2(sf::RenderWindow& outputTarget, FontHolder& fonts, SoundPlayer& sounds);
+                                            ~World2();
         void								update(sf::Time);
         void								draw();
 
         void processInput(const sf::Event& event);
-        bool isGameOver() const;
         bool                                onUserCreate();
     private:
         void								loadTextures();

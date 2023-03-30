@@ -25,6 +25,7 @@ class World1 : private sf::NonCopyable
 {
     public:
                                             World1(sf::RenderWindow& outputTarget, FontHolder& fonts, SoundPlayer& sounds);
+                                            ~World1();
         void								update(sf::Time);
         void								draw();
 

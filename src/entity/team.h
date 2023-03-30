@@ -12,6 +12,7 @@ public:
 
     bool IsTeamAlive();
     Worm* GetNextMember();
+    void checkWormRadius();
 };
 
 #endif // TEAM_H
