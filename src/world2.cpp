@@ -333,6 +333,7 @@ void World2::boom(float fWorld2X, float fWorld2Y, float fRadius)
     for (int i = 0; i < (int)fRadius; i++)
         listObjects.push_back(std::unique_ptr<Debris>(new Debris(fWorld2X, fWorld2Y)));
 
+    mSounds.play(SoundEffect::Boom);
 }
 
 void World2::drawLandscape()
@@ -1069,6 +1070,7 @@ void World2::handlePlayerInput(sf::Time )
 
                 bAI_Jump = false;
                 zReleased = false;
+                mSounds.play(SoundEffect::Jump);
             }
 
             if ((bEnablePlayerControl && sf::Keyboard::isKeyPressed(sf::Keyboard::S)) || (bEnableComputerControl && bAI_AimRight))
@@ -1117,6 +1119,7 @@ void World2::handlePlayerInput(sf::Time )
                 bEnergising = false;
                 spaceReleased = false;
                 spaceHeld = false;
+                mSounds.play(SoundEffect::Shoot);
             }
         }
         setCameraTargetObject(sf::Time());

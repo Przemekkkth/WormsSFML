@@ -30,6 +30,7 @@ class GameState : public State
         World1              mWorld1;
         World2              mWorld2;
         Player&				mPlayer;
-
+        MusicPlayer&        mMusicPlayer;
+        SoundPlayer&        mSoundPlayer;
 };
 #endif // GAME_STATE_H

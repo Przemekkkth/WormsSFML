@@ -12,7 +12,8 @@
 
 MenuState::MenuState(StateStack& stack, Context context)
     : State(stack, context)
-    , mGUIContainer()
+    , mGUIContainer(),
+      mMusicPlayer(*context.music)
 {
     sf::Texture& texture = context.textures->get(Textures::Title);
     mTitleStringSprite.setTexture(texture);
@@ -63,7 +64,7 @@ MenuState::MenuState(StateStack& stack, Context context)
     mGUIContainer.pack(sandbox2Button);
     mGUIContainer.pack(pVsPCButton);
     mGUIContainer.pack(exitButton);
-
+    mMusicPlayer.play(Music::MenuTheme);
 }
 
 void MenuState::draw()
@@ -83,6 +84,14 @@ bool MenuState::update(sf::Time)
 
 bool MenuState::handleEvent(const sf::Event& event)
 {
+    if (event.type == sf::Event::KeyReleased)
+    {
+        if(event.key.code == sf::Keyboard::M)
+        {
+            mMusicPlayer.setPaused(!mMusicPlayer.paused());
+        }
+    }
+
     mGUIContainer.handleEvent(event);
     return false;
 }

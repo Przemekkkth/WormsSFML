@@ -17,17 +17,22 @@ namespace
 
 SoundPlayer::SoundPlayer()
 : mSoundBuffers()
-, mSounds()
+, mSounds(),
+  mMuted(false)
 {
-//    mSoundBuffers.load(SoundEffect::Charge,    "res/sfx/charge.ogg");
-//    mSoundBuffers.load(SoundEffect::Swing,    "res/sfx/swing.ogg");
-//    mSoundBuffers.load(SoundEffect::Hole,    "res/sfx/hole.ogg");
+    mSoundBuffers.load(SoundEffect::Boom,     "res/growl.wav");
+    mSoundBuffers.load(SoundEffect::Jump,     "res/jump.wav");
+    mSoundBuffers.load(SoundEffect::Shoot,    "res/laser.wav");
     // Listener points towards the screen (default in SFML)
     sf::Listener::setDirection(0.f, 0.f, -1.f);
 }
 
 void SoundPlayer::play(SoundEffect::ID effect)
 {
+    if(mMuted)
+    {
+        return;
+    }
     play(effect, getListenerPosition());
 }
 
@@ -61,4 +66,14 @@ sf::Vector2f SoundPlayer::getListenerPosition() const
 {
     sf::Vector3f position = sf::Listener::getPosition();
     return sf::Vector2f(position.x, -position.y);
+}
+
+bool SoundPlayer::isMuted() const
+{
+    return mMuted;
+}
+
+void SoundPlayer::setMuted(bool val)
+{
+    mMuted = val;
 }

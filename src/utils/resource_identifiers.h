@@ -32,7 +32,7 @@ namespace SoundEffect
 {
     enum ID
     {
-        Charge, Hole, Swing
+        Boom, Jump, Shoot
     };
 }
 

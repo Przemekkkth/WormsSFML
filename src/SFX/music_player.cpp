@@ -4,9 +4,10 @@
 MusicPlayer::MusicPlayer()
 : mMusic()
 , mFilenames()
-, mVolume(100.f)
+, mVolume(20.f)
 {
     mFilenames[Music::MenuTheme]    = "res/menu_theme.wav";
+    mPause = false;
 }
 
 void MusicPlayer::play(Music::ID theme)
@@ -31,6 +32,16 @@ void MusicPlayer::setVolume(float volume)
     mVolume = volume;
 }
 
+float MusicPlayer::volume() const
+{
+    return mVolume;
+}
+
+bool MusicPlayer::paused() const
+{
+    return mPause;
+}
+
 sf::SoundSource::Status MusicPlayer::status()
 {
     return mMusic.getStatus();
@@ -38,6 +49,7 @@ sf::SoundSource::Status MusicPlayer::status()
 
 void MusicPlayer::setPaused(bool paused)
 {
+    mPause = paused;
     if (paused)
         mMusic.pause();
     else

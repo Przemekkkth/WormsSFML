@@ -24,9 +24,11 @@ class SoundPlayer : private sf::NonCopyable
         void						setListenerPosition(sf::Vector2f position);
         sf::Vector2f				getListenerPosition() const;
 
-
+        bool                        isMuted() const;
+        void                        setMuted(bool val);
     private:
         SoundBufferHolder			mSoundBuffers;
         std::list<sf::Sound>		mSounds;
+        bool                        mMuted;
 };
 #endif // SOUNDPLAYER_H

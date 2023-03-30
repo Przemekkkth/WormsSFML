@@ -21,6 +21,7 @@ class MenuState : public State
     private:
         sf::Sprite              mTitleStringSprite;
         GUI::Container			mGUIContainer;
+        MusicPlayer&            mMusicPlayer;
 };
 
 #endif // MENUSTATE_H

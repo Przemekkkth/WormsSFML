@@ -12,7 +12,9 @@ GameState::GameState(StateStack& stack, Context context)
 , mWorld(*context.window, *context.fonts, *context.sounds),
   mWorld1(*context.window, *context.fonts, *context.sounds),
   mWorld2(*context.window, *context.fonts, *context.sounds),
-  mPlayer(*context.player)
+  mPlayer(*context.player),
+  mMusicPlayer(*context.music),
+  mSoundPlayer(*context.sounds)
 {
     if(sMode == GameState::Mode::Sandbox1)
     {
@@ -69,6 +71,11 @@ bool GameState::handleEvent(const sf::Event& event)
         {
             requestStackPop();
             requestStackPush(States::Menu);
+        }
+        else if(event.key.code == sf::Keyboard::M)
+        {
+            mMusicPlayer.setPaused(!mMusicPlayer.paused());
+            mSoundPlayer.setMuted(mMusicPlayer.paused());
         }
     }
 
