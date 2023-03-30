@@ -75,7 +75,7 @@ bool GameState::handleEvent(const sf::Event& event)
         else if(event.key.code == sf::Keyboard::M)
         {
             mMusicPlayer.setPaused(!mMusicPlayer.paused());
-            mSoundPlayer.setMuted(mMusicPlayer.paused());
+            //mSoundPlayer.setMuted(mMusicPlayer.paused());
         }
     }
 

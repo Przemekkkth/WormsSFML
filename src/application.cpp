@@ -63,6 +63,22 @@ void Application::processInput()
 
         if (event.type == sf::Event::Closed)
             mWindow.close();
+        if(event.type == sf::Event::KeyReleased)
+        {
+            //Uncomment if you want to make screenshots
+//                if(event.key.code == sf::Keyboard::O)
+//                {
+//                    static int index = 0;
+//                    sf::Texture texture;
+//                    texture.create(mWindow.getSize().x, mWindow.getSize().y);
+//                    texture.update(mWindow);
+//                    std::string filename = "app" + std::to_string(index) + ".png";
+//                    if (texture.copyToImage().saveToFile(filename))
+//                    {
+//                        index++;
+//                    }
+//                }
+        }
     }
 }
 
